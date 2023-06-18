@@ -1,6 +1,15 @@
 #include <stdio.h>
 
-/* printing the alphabet  */
+/**
+ * main - Entry point
+ *
+ * Description: printing all letters of the alphabet using putchar()
+ * letters are printed in lower case
+ *
+ * Return: program returns 0
+ *
+ */
+
 int main(void)
 {
 	char c;
