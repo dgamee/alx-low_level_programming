@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * main - print alohabet in lower case followed by a new line
+ * print_alphabet - print alohabet in lower case followed by a new line
  *
  * Return: 0 (success)
  */
