@@ -1,0 +1,15 @@
+#include "main.h"
+/**
+ * add - Adds two integers 
+ * @a: Parameter of type int
+ * @b: Parameter of type int
+ *
+ * Returns: returns the sum
+ */
+int add(int a, int b)
+{
+	int sum;
+
+	sum = (a + B);
+	return (sum);
+}
