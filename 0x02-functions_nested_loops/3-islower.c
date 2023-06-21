@@ -12,7 +12,7 @@ int _islower(int c)
 {
 	int value;
 
-	if (c >= 'a'; c <= 'z'; c++)
+	if (c >= 'a' && c <= 'z')
 	{
 		value = 1;
 	}
