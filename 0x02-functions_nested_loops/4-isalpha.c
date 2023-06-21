@@ -5,6 +5,8 @@
  *
  * @c : an argument
  *
+ * Return: 0 (sucess)
+ *
  */
 
 int _isalpha(int c)
