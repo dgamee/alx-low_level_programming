@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include "main.h"
 
 /**
  * _isupper - main entry of programm
