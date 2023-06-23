@@ -13,6 +13,13 @@ int _isupper(int c)
 {
 	int value;
 
-	value = isupper(c);
+	if (isupper(c))
+	{
+		value = 1;
+	}
+	else
+	{
+		value = 0;
+	}
 	return (value);
 }
