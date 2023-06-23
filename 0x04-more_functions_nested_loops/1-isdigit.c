@@ -14,7 +14,14 @@ int _isdigit(int c)
 
 	if (c >= 0 && c <= 9)
 	{
-		value = 1;
+		if (isdigit(c))
+		{
+			value = 1;
+		}
+		else
+		{
+			value = 0;
+		}
 	}
 	else
 	{
