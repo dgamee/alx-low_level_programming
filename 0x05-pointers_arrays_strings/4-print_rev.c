@@ -10,16 +10,13 @@
 void print_rev(char *s)
 {
 	int strlength = strlen(s);
-	int *slen = &strlength;
-	char reversed[&strlength + 1];
-	int i = 0;
+	int i;
 
-	while (strlength > 0)
+	for (i = strlength; i > 0; i--)
 	{
-		reversed[i] = s[strlength - 1];
-		strlength--;
-		i++;
+		int cat = i - 1;
+
+		putchar(s[cat]);
 	}
-	reversed[i] = '\0';
-	printf("%s\n", reversed);
+	putchar('\n');
 }
