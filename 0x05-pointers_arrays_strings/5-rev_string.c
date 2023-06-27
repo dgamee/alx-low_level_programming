@@ -14,6 +14,6 @@ void rev_string(char *s)
 
 	for (i = strlength - 1; i > 0; i--)
 	{
-		write(s[i]);
+		fwrite(s[i]);
 	}
 }
