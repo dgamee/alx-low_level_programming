@@ -16,6 +16,6 @@ void puts2(char *str)
 	{
 		char word = str[i];
 
-		i + 2;
+		i += 2;
 	}
 }
