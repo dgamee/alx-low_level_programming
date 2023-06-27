@@ -10,7 +10,8 @@
 void print_rev(char *s)
 {
 	int strlength = strlen(s);
-	char reversed[strlength + 1];
+	int *slen = &strlength;
+	char reversed[&strlength + 1];
 	int i = 0;
 
 	while (strlength > 0)
