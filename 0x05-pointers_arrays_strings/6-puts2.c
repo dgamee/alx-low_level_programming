@@ -12,7 +12,7 @@ void puts2(char *str)
 	int length = strlen(str);
 	int i = 0;
 
-	for (i = 0; i < length)
+	for (i = 0; i < length;)
 	{
 		char word = str[i];
 
