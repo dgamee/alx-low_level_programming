@@ -9,11 +9,18 @@
 
 void rev_string(char *s)
 {
-	int strlength = strlen(s);
-	int i;
+	int length = strlen(s);
+	int i = 0;
+	int end = length - 1;
 
-	for (i = strlength - 1; i > 0; i--)
+	while (i < end)
 	{
-		fwrite(s[i]);
+		char word = s[i];
+
+		s[i] = s[end];
+		s[end] = word;
+
+		i++;
+		end--;
 	}
 }
