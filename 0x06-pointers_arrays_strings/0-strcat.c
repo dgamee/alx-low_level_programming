@@ -13,8 +13,6 @@
 
 char *_strcat(char *dest, char *src)
 {
-	char result;
-
-	result = strcat(dest, src);
-	return (result);
+	strcat(dest, src);
+	return (dest);
 }
