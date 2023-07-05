@@ -9,13 +9,20 @@
 
 void _print_rev_recursion(char *s)
 {
-	int length = strlen(s);
-	int i = 1;
 
-	if (length >= 0)
+	if (*s == '\0')
 	{
-		putchar(s[length - i]);
-		i++;
-		_print_rev_recursion(s);
+		/**
+		 *  Base case: stop recursion when reaching the end of the string
+		 */
+		return;
 	}
+	/**
+	  * recursively call with the next character
+	  */
+	_print_rev_recursion(s + 1);
+	/**
+	 * print the current character
+	 */
+	putchar(*s);
 }
