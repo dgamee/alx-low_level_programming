@@ -27,8 +27,6 @@ int _pow_recursion(int x, int y)
 	else
 	{
 		int temp = _pow_recursion(x, (y - 1) / 2);
-		return (base * temp * temp);
+		return (x * temp * temp);
 	}
-}
-	return (pow(x, y));
 }
