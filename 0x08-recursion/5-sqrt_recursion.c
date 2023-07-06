@@ -3,46 +3,39 @@
 #include "main.h"
 
 /**
- * _sqrt_recursion - a function that return the natural square root of a number
- *
- * @n: integer number
- *
- *
- * Return: returns the square root of n
- */
+ * sqtRecursive - computes square root recursively doing binary search
+ * @start: inital number
+ * @end: last number within the limit of number
+ * @m: given number
+ * Return: 1 if not found sqrroot, else sqrroot
+ **/
+int sqtRecursive(int start, int end, int m)
+{
+	long mid;
 
-int _sqrt_recursion(int n)
+	if (end >= start)
+	{
+		mid = start + (end - start) / 2;
+		if (mid * mid == m)
+			return (mid);
+/* following binary search */
+		if (mid * mid > m)
+			return (sqtRecursive(start, mid - 1, m));
+		if (mid * mid < m)
+			return (sqtRecursive(mid + 1, end, m));
+	}
+	return (-1);
+}
+/**
+ * _sqrt_recursion - finds the natural square root of a number
+ * @n: given number
+ * Return: square root of n or -1
+ **/
+	int _sqrt_recursion(int n)
 {
 	if (n < 0)
-	{
 		return (-1);
-	}
 	if (n == 0 || n == 1)
 		return (n);
-
-	int start;
-	int end;
-	int result;
-
-	start = 1;
-	end = n;
-	result = -1;
-
-	while (start <= end)
-	{
-		int mid = (start + end) / 2;
-
-		if (mid * mid == n)
-			return (n);
-		if (mid * mid < n)
-		{
-			start = mid + 1;
-			result = mid;
-		}
-		else
-		{
-			end = mid - 1;
-		}
-	}
-	return (result);
+	return (sqtRecursive(2, n, n));
 }
