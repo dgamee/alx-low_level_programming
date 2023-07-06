@@ -20,9 +20,11 @@ int _sqrt_recursion(int n)
 	if (n == 0 || n == 1)
 		return (n);
 
-	int start = 1;
+	int start;
 	int end = n;
 	int result = -1;
+
+	start = 1;
 
 	while (start <= end)
 	{
