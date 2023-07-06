@@ -26,7 +26,7 @@ int _sqrt_recursion(int n)
 
 	start = 1;
 	end = n;
-	result = -1
+	result = -1;
 
 	while (start <= end)
 	{
