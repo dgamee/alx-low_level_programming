@@ -1,73 +1,125 @@
-#include "main.h"
+#include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include "main.h"
+
+int copy_file(char **arguments);
 
 /**
-  * errorprint - a function that check errors
-  * @file_from: initial file to copy from
-  * @file_to: destination file you want to be  copied to
-  * @argv: argument vector
-  * Return: no return
-  */
+ * main - Entry point
+ * @argc: Number of arguments passed to program (including program name)
+ * @argv: Vector containing all arguments passed
+ *
+ * Return: 0 if success or -1 if failure.
+ */
 
-void errorprint(int file_from, int file_to, char *argv[])
+int main(int argc, char **argv)
 {
-	if (file_from == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-			exit(98);
-	}
-	if (file_to == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			exit(99);
-	}
-}
-
- /**
-   * main - A function copy  of a file to another
-   *
-   * @argc: argument count
-   * @argv: agument vector
-   * Return: 0 0n success
-   */
-
-int main(int argc, char *argv[])
-{
-	int file_place;
-	int file_to, error_close;
-	ssize_t value, len;
-	char buff[1024];
+	char *usage = "Usage: %s file_from file_to\n";
+	char *file_not_exist = "Error: Can't read from file %s\n";
 
 	if (argc != 3)
 	{
-		dprintf(STDERR_FILENO, "%s\n", "Usage: cp file_place file_to");
+		dprintf(STDERR_FILENO, usage, "cp");
 		exit(97);
 	}
-	file_place = open(argv[1], O_RDONLY);
-	file_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC | O_APPEND, 0664);
-	errorprint(file_place, file_to, argv);
 
-	value = 1024;
-	while (value == 1024)
+	if (!argv[1][0])
 	{
-		value = read(file_place, buff, 1024);
-		if (value == -1)
-			errorprint(-1, 0, argv);
-		len = write(file_to, buff, value);
-			if (len == -1)
-			errorprint(0, -1, argv);
+		dprintf(STDERR_FILENO, file_not_exist, argv[1]);
+		exit(98);
 	}
-	error_close = close(file_place);
-		if (error_close == -1)
+
+	copy_file(argv);
+
+	return (0);
+}
+
+/**
+ * copy_file - copies contents of a file to another file
+ * @arguments: Vector containing file to copy from and file to copy to
+ *
+ * Return: 0 if success
+ */
+
+int copy_file(char **arguments)
+{
+	char buff[BUFF_SIZE];
+	char *cant_read = "Error: Can't read from file %s\n";
+	char *cant_write = "Error: Can't write to %s\n";
+	char *cant_close = "Error: Can't close fd %d\n";
+	char *file_from = arguments[1];
+	char *file_to = arguments[2];
+	int file_from_fd, file_to_fd, bytes_read, bytes_written;
+
+	file_from_fd = open(file_from, O_RDONLY);
+	if (file_from_fd == -1)
+	{
+		dprintf(STDERR_FILENO, cant_read, file_from);
+		exit(98);
+	}
+	file_to_fd = open(file_to, O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 0664);
+	if (file_to_fd == -1)
+	{
+		if (close(file_from_fd) == -1)
 		{
-			dprintf(STDERR_FILENO, "Error: can't close ptr %d\n", file_place);
+			dprintf(STDERR_FILENO, cant_close, file_from_fd);
 			exit(100);
 		}
-	error_close = close(file_to);
-	if (error_close == -1)
+		dprintf(STDERR_FILENO, cant_write, file_to);
+		exit(99);
+	}
+
+	do {
+		bytes_read = read(file_from_fd, buff, BUFF_SIZE);
+		/* Might need to handle this outside before trying to read from it */
+		if (file_from_fd == -1 || bytes_read == -1)
+		{
+			if (close(file_from_fd) == -1)
+			{
+				dprintf(STDERR_FILENO, cant_close, file_from_fd);
+				exit(100);
+			}
+			if (close(file_to_fd) == -1)
+			{
+				dprintf(STDERR_FILENO, cant_close, file_to_fd);
+				exit(100);
+			}
+			dprintf(STDERR_FILENO, cant_read, file_from);
+			exit(98);
+		}
+
+		bytes_written = write(file_to_fd, buff, bytes_read);
+		if (file_to_fd == -1 || bytes_written == -1)
+		{
+			if (close(file_from_fd) == -1)
+			{
+				dprintf(STDERR_FILENO, cant_close, file_from_fd);
+				exit(100);
+			}
+			if (close(file_to_fd) == -1)
+			{
+				dprintf(STDERR_FILENO, cant_close, file_to_fd);
+				exit(100);
+			}
+
+			dprintf(STDERR_FILENO, cant_write, file_to);
+			exit(99);
+		}
+	} while (bytes_read > 0);
+
+	if (close(file_from_fd) == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Cant't close ptr %d\n", file_to);
+		dprintf(STDERR_FILENO, cant_close, file_from_fd);
 		exit(100);
 	}
+	else if (close(file_to_fd) == -1)
+	{
+		dprintf(STDERR_FILENO, cant_close, file_to_fd);
+		exit(100);
+	}
+
 	return (0);
 }
