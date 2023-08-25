@@ -3,8 +3,8 @@
 
 /**
   * errorprint - a function that check errors
-  * @file_place: initial file to copy from
-  * @file_to: destination file you want to copy
+  * @file_from: initial file to copy from
+  * @file_to: destination file you want to be  copied to
   * @argv: argument vector
   * Return: no return
   */
@@ -24,7 +24,8 @@ void errorprint(int file_from, int file_to, char *argv[])
 }
 
  /**
-   * main - A function copy content of a file to another
+   * main - A function copy  of a file to another
+   *
    * @argc: argument count
    * @argv: agument vector
    * Return: 0 0n success
